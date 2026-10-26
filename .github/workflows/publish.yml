@@ -1,0 +1,39 @@
+name: Publish package
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: pnpm
+          registry-url: https://npm.pkg.github.com
+          scope: '@openhomefoundation'
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Set version from tag
+        working-directory: packages/astro-hubspot-forms
+        run: npm pkg set version="${GITHUB_REF_NAME#v}"
+
+      - name: Include README in the package
+        run: cp README.md packages/astro-hubspot-forms/README.md
+
+      - name: Publish
+        working-directory: packages/astro-hubspot-forms
+        run: pnpm publish --no-git-checks
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
