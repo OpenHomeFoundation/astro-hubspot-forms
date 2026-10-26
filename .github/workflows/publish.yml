@@ -9,7 +9,7 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: write
       packages: write
     steps:
       - uses: actions/checkout@v5
@@ -37,3 +37,16 @@ jobs:
         run: pnpm publish --no-git-checks
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # A tarball on the release can be installed with any package manager and no token:
+      # npm install https://github.com/OpenHomeFoundation/astro-hubspot-forms/releases/download/vX.Y.Z/<file>.tgz
+      - name: Pack
+        working-directory: packages/astro-hubspot-forms
+        run: pnpm pack --pack-destination "$RUNNER_TEMP/pack"
+
+      - name: Attach tarball to the GitHub release
+        run: |
+          gh release create "$GITHUB_REF_NAME" "$RUNNER_TEMP"/pack/*.tgz --title "$GITHUB_REF_NAME" --generate-notes \
+            || gh release upload "$GITHUB_REF_NAME" "$RUNNER_TEMP"/pack/*.tgz --clobber
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
