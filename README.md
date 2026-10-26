@@ -136,7 +136,8 @@ with spacing between fields, and nothing else: no colours, fonts or borders.
 import '@openhomefoundation/astro-hubspot-forms/layout.css';
 ```
 
-Every selector is wrapped in `:where()`, which gives it zero specificity, so **any rule in your site's CSS wins**.
+Every selector is a single class, so it beats element rules and CSS resets (a reset's `section { display: block }`
+would otherwise break the step layout), while **any rule in your site's CSS that uses a class wins**.
 Tune it with custom properties:
 
 | Property          | Default   | Description                                                    |
@@ -182,7 +183,8 @@ While a submission is in flight, the wrapper has a `data-submitting` attribute. 
 
 > [!TIP]
 > Rich text written in the HubSpot editor can contain inline styles (such as a font size on a heading). Inline styles
-> beat your stylesheet, so keep rich text plain in HubSpot if you want it to follow your site's typography.
+> beat your stylesheet, so keep rich text plain in HubSpot if you want it to follow your site's typography. Empty
+> paragraphs and stray line breaks the editor adds for spacing are removed, so spacing comes from your CSS.
 
 ## Events
 

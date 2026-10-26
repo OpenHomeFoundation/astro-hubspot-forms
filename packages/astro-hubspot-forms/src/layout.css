@@ -1,55 +1,64 @@
 /*
  * Optional structural layout for HubSpot forms: rows, spacing and stacking only, no colours,
- * fonts, borders or input styling. Every selector is wrapped in :where() so it has zero
- * specificity and any site rule overrides it.
+ * fonts, borders or input styling.
  *
  *   import '@openhomefoundation/astro-hubspot-forms/layout.css';
+ *
+ * Selectors are single classes, so they beat element rules and CSS resets (e.g. a reset's
+ * `section { display: block }` would otherwise break the step layout), while any site rule using
+ * a class still wins.
  *
  * Tune with custom properties: --hsf-gap (between fields) and --hsf-label-gap (label to input).
  */
 
-:where(.hsf-step, .hsf-success) {
+.hsf-step,
+.hsf-success {
   display: grid;
   gap: var(--hsf-gap, 1.25rem);
 }
 
 /* Fields sharing a row in the HubSpot editor sit side by side; --hsf-columns is set per row. */
-:where(.hsf-row) {
+.hsf-row {
   display: grid;
   gap: var(--hsf-gap, 1.25rem);
   grid-template-columns: repeat(var(--hsf-columns, 1), minmax(0, 1fr));
 }
 
 @media (max-width: 30rem) {
-  :where(.hsf-row) {
+  .hsf-row {
     grid-template-columns: minmax(0, 1fr);
   }
 }
 
-:where(.hsf-field) {
+.hsf-field {
   display: grid;
   gap: var(--hsf-label-gap, 0.375rem);
   align-content: start;
   min-width: 0;
 }
 
-:where(.hsf-input) {
+.hsf-input {
   box-sizing: border-box;
   width: 100%;
 }
 
-:where(.hsf-option) {
+.hsf-option {
   display: flex;
   gap: 0.5rem;
   align-items: flex-start;
 }
 
-:where(.hsf-consent) {
+.hsf-consent {
   display: grid;
   gap: var(--hsf-label-gap, 0.75rem);
 }
 
-:where(.hsf-nav) {
+.hsf-progress {
+  display: grid;
+  gap: var(--hsf-label-gap, 0.375rem);
+}
+
+.hsf-nav {
   display: flex;
   flex-wrap: wrap;
   gap: 0.75rem;

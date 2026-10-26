@@ -1,5 +1,14 @@
 ---
-import type { HubSpotFormClasses, ContentModule, DataPrivacyModule, FieldModule, HeadingModule, HiddenModule, RichTextModule } from './types';
+import { tidyRichText } from './html';
+import type {
+  ContentModule,
+  DataPrivacyModule,
+  FieldModule,
+  HeadingModule,
+  HiddenModule,
+  HubSpotFormClasses,
+  RichTextModule,
+} from './types';
 
 interface Props {
   module: ContentModule;
@@ -48,7 +57,7 @@ const defaultValue = field.defaultValue ?? field.options?.find((o) => o.selected
 ---
 
 {
-  m.type === 'richText' && <div class="hsf-richtext" set:html={(m as RichTextModule).html} />
+  m.type === 'richText' && <div class="hsf-richtext" set:html={tidyRichText((m as RichTextModule).html)} />
 }
 {
   m.type === 'heading' && (() => {
