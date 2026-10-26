@@ -1,0 +1,51 @@
+---
+import { HubSpotForm } from '@openhomefoundation/astro-hubspot-forms';
+import '@openhomefoundation/astro-hubspot-forms/layout.css';
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>HubSpot form playground</title>
+  </head>
+  <body>
+    <main>
+      <HubSpotForm
+        formId={import.meta.env.HUBSPOT_FORM_ID}
+        classes={{ button: 'btn', submit: 'btn-primary', next: 'btn-primary', previous: 'btn-outline' }}
+      />
+    </main>
+  </body>
+</html>
+
+<style is:global>
+  /* Stand-in "site" styles, written the way a real site stylesheet would be: element selectors
+     plus the site's own button classes. The form package itself ships none of this. */
+  body { font-family: system-ui, sans-serif; background: #f5f7fa; color: #1c1c1c; margin: 0; }
+  main { max-width: 40rem; margin: 3rem auto; padding: 0 1rem; }
+  a { color: #18bcf2; }
+  label, legend { font-weight: 600; }
+  fieldset { border: 0; padding: 0; margin: 0; }
+
+  input:not([type="checkbox"], [type="radio"]), select, textarea {
+    font: inherit; padding: 0.625rem 0.75rem; border: 1px solid #c8ccd2; border-radius: 0.5rem; background: #fff;
+  }
+  input:focus, select:focus, textarea:focus { outline: 2px solid #18bcf2; outline-offset: 1px; }
+  textarea { min-height: 8rem; }
+  [aria-invalid="true"] { border-color: #db4437 !important; }
+  progress { width: 100%; accent-color: #18bcf2; }
+
+  .btn { font: inherit; font-weight: 600; padding: 0.75rem 1.5rem; border: 0; border-radius: 999px; cursor: pointer; }
+  .btn:disabled { opacity: 0.6; }
+  .btn-primary { background: #18bcf2; color: #fff; }
+  .btn-outline { background: transparent; color: #18bcf2; box-shadow: inset 0 0 0 2px #18bcf2; }
+
+  /* The only form-specific hooks this site needs: error colours and small print. */
+  .hsf-required { color: #db4437; margin-left: 0.25rem; }
+  .hsf-field-error, .hsf-error { margin: 0; font-size: 0.875rem; color: #db4437; }
+  .hsf-description, .hsf-progress, .hsf-consent { font-size: 0.875rem; color: #555; }
+  .hsf-option { font-weight: 400; }
+  .hsf-richtext p { margin: 0 0 0.5rem; }
+  .hsf-success { padding: 1.5rem; border-radius: 0.5rem; background: #e6f7ee; }
+</style>

@@ -1,0 +1,13 @@
+{
+  "name": "playground",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build"
+  },
+  "dependencies": {
+    "@openhomefoundation/astro-hubspot-forms": "workspace:*",
+    "astro": "latest"
+  }
+}

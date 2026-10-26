@@ -1,0 +1,208 @@
+---
+import type { HubSpotFormClasses, ContentModule, DataPrivacyModule, FieldModule, HeadingModule, HiddenModule, RichTextModule } from './types';
+
+interface Props {
+  module: ContentModule;
+  uid: string;
+  step: number;
+  stepCount: number;
+  classes: HubSpotFormClasses;
+}
+
+const { module: m, uid, step, stepCount, classes } = Astro.props;
+const id = `${uid}-${m.id}`;
+
+const inputTypes: Record<string, string> = {
+  text: 'text',
+  email: 'email',
+  number: 'number',
+  phoneNumber: 'tel',
+  url: 'url',
+  date: 'date',
+};
+
+// Browser autofill hints for common HubSpot properties.
+const autocompleteHints: Record<string, string> = {
+  '0-1/firstname': 'given-name',
+  '0-1/lastname': 'family-name',
+  '0-1/email': 'email',
+  '0-1/phone': 'tel',
+  '0-1/mobilephone': 'tel',
+  '0-1/company': 'organization',
+  '0-1/website': 'url',
+  '0-2/name': 'organization',
+  '0-2/domain': 'url',
+};
+
+const field = m as FieldModule;
+const descId = field.description ? `${id}-desc` : undefined;
+const errorId = `${id}-error`;
+const describedBy = [descId, errorId].filter(Boolean).join(' ');
+const common = {
+  id,
+  name: field.propertyReference,
+  required: field.required,
+  'aria-describedby': describedBy,
+};
+const defaultValue = field.defaultValue ?? field.options?.find((o) => o.selected)?.value;
+---
+
+{
+  m.type === 'richText' && <div class="hsf-richtext" set:html={(m as RichTextModule).html} />
+}
+{
+  m.type === 'heading' && (() => {
+    const h = m as HeadingModule;
+    const Tag = `h${Math.min(Math.max(h.level, 1), 6)}`;
+    return <Tag class="hsf-heading">{h.text}</Tag>;
+  })()
+}
+{m.type === 'divider' && <hr class="hsf-divider" />}
+{
+  m.type === 'image' && (
+    <img class="hsf-image" src={(m as any).src ?? (m as any).url} alt={(m as any).alt ?? ''} loading="lazy" />
+  )
+}
+{
+  m.type === 'progressBar' && (
+    <div class="hsf-progress">
+      <span class="hsf-progress-text">Step {step + 1} of {stepCount}</span>
+      <progress class="hsf-progress-bar" value={step + 1} max={stepCount} aria-hidden="true" />
+    </div>
+  )
+}
+{
+  m.type === 'hidden' && (
+    <input
+      type="hidden"
+      name={(m as HiddenModule).propertyReference}
+      value={(m as HiddenModule).defaultValue ?? (m as HiddenModule).value ?? ''}
+    />
+  )
+}
+
+{
+  (m.type === 'radioSelect' || m.type === 'multipleCheckbox') && (
+    <fieldset
+      class={`hsf-field hsf-field--${m.type}`}
+      data-required={field.required ? '' : undefined}
+      aria-describedby={describedBy}
+    >
+      <legend class:list={['hsf-label', classes.label]}>
+        {field.label}
+        {field.required && <span class="hsf-required" aria-hidden="true">*</span>}
+      </legend>
+      {field.description && <p class="hsf-description" id={descId} set:html={field.description} />}
+      {field.options?.map((o, i) => (
+        <label class="hsf-option">
+          <input
+            type={m.type === 'radioSelect' ? 'radio' : 'checkbox'}
+            class={classes.checkbox}
+            id={`${id}-${i}`}
+            name={field.propertyReference}
+            value={o.value}
+            checked={o.selected}
+            required={m.type === 'radioSelect' && field.required}
+          />
+          <span>{o.label}</span>
+        </label>
+      ))}
+      <p class:list={['hsf-field-error', classes.error]} id={errorId} hidden />
+    </fieldset>
+  )
+}
+
+{
+  m.type === 'singleCheckbox' && (
+    <div class="hsf-field hsf-field--singleCheckbox">
+      <label class="hsf-option">
+        <input type="checkbox" class={classes.checkbox} value="true" checked={defaultValue === 'true'} {...common} />
+        <span>
+          {field.label}
+          {field.required && <span class="hsf-required" aria-hidden="true">*</span>}
+        </span>
+      </label>
+      {field.description && <p class="hsf-description" id={descId} set:html={field.description} />}
+      <p class:list={['hsf-field-error', classes.error]} id={errorId} hidden />
+    </div>
+  )
+}
+
+{
+  (m.type in inputTypes || m.type === 'textarea' || m.type === 'dropdownSelect') && (
+    <div class={`hsf-field hsf-field--${m.type}`}>
+      <label class:list={['hsf-label', classes.label]} for={id}>
+        {field.label}
+        {field.required && <span class="hsf-required" aria-hidden="true">*</span>}
+      </label>
+      {field.description && <p class="hsf-description" id={descId} set:html={field.description} />}
+      {m.type === 'textarea' ? (
+        <textarea class:list={['hsf-input', classes.input]} placeholder={field.placeholder || undefined} {...common}>{defaultValue}</textarea>
+      ) : m.type === 'dropdownSelect' ? (
+        <select class:list={['hsf-input', classes.input]} {...common}>
+          <option value="">{field.placeholder || 'Please select'}</option>
+          {field.options?.map((o) => (
+            <option value={o.value} selected={o.selected}>{o.label}</option>
+          ))}
+        </select>
+      ) : (
+        <input
+          class:list={['hsf-input', classes.input]}
+          type={inputTypes[m.type]}
+          placeholder={field.placeholder || undefined}
+          value={defaultValue}
+          autocomplete={autocompleteHints[field.propertyReference]}
+          {...common}
+        />
+      )}
+      <p class:list={['hsf-field-error', classes.error]} id={errorId} hidden />
+    </div>
+  )
+}
+
+{
+  m.type === 'dataPrivacy' && (() => {
+    const p = m as DataPrivacyModule;
+    return (
+      <div class="hsf-consent">
+        {p.communicationConsentText && <div class="hsf-richtext" set:html={p.communicationConsentText} />}
+        {p.communicationConsentCheckboxes.map((c) => (
+          <div class="hsf-field hsf-field--consent">
+            <label class="hsf-option">
+              <input
+                type="checkbox"
+                class={classes.checkbox}
+                id={`${id}-comm-${c.communicationTypeId}`}
+                name={`consent:communication:${c.communicationTypeId}`}
+                required={c.required}
+                aria-describedby={`${id}-comm-${c.communicationTypeId}-error`}
+              />
+              <span set:html={c.label} />
+            </label>
+            <p class:list={['hsf-field-error', classes.error]} id={`${id}-comm-${c.communicationTypeId}-error`} hidden />
+          </div>
+        ))}
+        {!p.isLegitimateInterest && p.processingConsentType === 'REQUIRED_CHECKBOX' && (
+          <>
+            {p.processingConsentText && <div class="hsf-richtext" set:html={p.processingConsentText} />}
+            <div class="hsf-field hsf-field--consent">
+              <label class="hsf-option">
+                <input
+                  type="checkbox"
+                class={classes.checkbox}
+                  id={`${id}-process`}
+                  name="consent:process"
+                  required
+                  aria-describedby={`${id}-process-error`}
+                />
+                <span set:html={p.processingConsentCheckboxLabel} />
+              </label>
+              <p class:list={['hsf-field-error', classes.error]} id={`${id}-process-error`} hidden />
+            </div>
+          </>
+        )}
+        {p.privacyPolicyText && <div class="hsf-richtext hsf-privacy" set:html={p.privacyPolicyText} />}
+      </div>
+    );
+  })()
+}

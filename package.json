@@ -1,0 +1,10 @@
+{
+  "name": "astro-hubspot-forms-workspace",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "pnpm --filter playground dev",
+    "dump-form": "node --env-file=.env scripts/dump-form.mjs"
+  },
+  "packageManager": "pnpm@12.15.0"
+}

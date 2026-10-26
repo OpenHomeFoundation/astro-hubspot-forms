@@ -1,0 +1,25 @@
+{
+  "name": "@openhomefoundation/astro-hubspot-forms",
+  "version": "0.0.1",
+  "description": "Render HubSpot forms as native, unstyled HTML in Astro sites.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./HubSpotForm.astro": "./src/HubSpotForm.astro",
+    "./layout.css": "./src/layout.css"
+  },
+  "files": [
+    "src"
+  ],
+  "peerDependencies": {
+    "astro": ">=5"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OpenHomeFoundation/astro-hubspot-forms.git",
+    "directory": "packages/astro-hubspot-forms"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  }
+}

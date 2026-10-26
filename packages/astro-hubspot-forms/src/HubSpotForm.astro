@@ -1,0 +1,155 @@
+---
+import { fetchRenderDefinition, findUnsupportedModules } from './api';
+import Module from './Module.astro';
+import type {
+  ButtonModule,
+  ClientFormConfig,
+  DataPrivacyModule,
+  HubSpotFormClasses,
+  RenderDefinition,
+  RowModule,
+  StepModule,
+} from './types';
+
+interface Props {
+  formId: string;
+  portalId?: string;
+  /** Pass a definition directly (e.g. from a fixture) to skip the network call. */
+  definition?: RenderDefinition;
+  class?: string;
+  /** Site classes to add to inputs, labels and buttons. */
+  classes?: HubSpotFormClasses;
+}
+
+const env = (key: string): string | undefined =>
+  import.meta.env[key] ?? (typeof process !== 'undefined' ? process.env[key] : undefined);
+
+const { formId, class: className, classes = {} } = Astro.props;
+const portalId = Astro.props.portalId ?? env('HUBSPOT_PORTAL_ID');
+if (!portalId) throw new Error('HubSpotForm: missing portalId (prop or HUBSPOT_PORTAL_ID).');
+
+const definition = Astro.props.definition ?? (await fetchRenderDefinition(portalId, formId));
+
+const unsupported = findUnsupportedModules(definition);
+if (unsupported.length) {
+  throw new Error(`HubSpotForm ${formId}: unsupported module type(s): ${unsupported.join(', ')}.`);
+}
+if (Object.keys(definition.form.logicRules ?? {}).length) {
+  console.warn(`HubSpotForm ${formId}: conditional logic is not supported yet and will be ignored.`);
+}
+
+const steps = definition.form.modules;
+const uid = `hsf-${formId.slice(0, 8)}`;
+const t = definition.translations;
+
+const privacy = steps
+  .flatMap((s) => s.modules)
+  .flatMap((r) => r.modules)
+  .find((m): m is DataPrivacyModule => m.type === 'dataPrivacy');
+
+// HubSpot's editor calls these "PQL"/"client"; the submissions API calls them "LEAD"/"CUSTOMER".
+const legalBasis = (basis = '') => (basis.includes('CLIENT') || basis.includes('CUSTOMER') ? 'CUSTOMER' : 'LEAD');
+
+const config: ClientFormConfig = {
+  portalId,
+  formId,
+  liveValidation: definition.settings.enabledLiveValidation,
+  consent: privacy && {
+    legitimateInterest:
+      privacy.isLegitimateInterest && privacy.legitimateInterestSubscriptionTypes[0] !== undefined
+        ? {
+            subscriptionTypeId: privacy.legitimateInterestSubscriptionTypes[0],
+            legalBasis: legalBasis(privacy.legitimateInterestLegalBasis),
+            text: privacy.privacyPolicyText ?? '',
+          }
+        : undefined,
+    processing: privacy.processingConsentType === 'REQUIRED_CHECKBOX' ? 'checkbox' : 'implicit',
+    processingText: privacy.processingConsentText ?? '',
+    communications: privacy.communicationConsentCheckboxes.map((c) => ({
+      subscriptionTypeId: c.communicationTypeId,
+      text: c.label,
+    })),
+  },
+  messages: {
+    required: t.FIELD_ERROR_REQUIRED_FIELD ?? 'Please complete this required field.',
+    email: t.FIELD_ERROR_INVALID_EMAIL_FORMAT ?? 'Email must be formatted correctly.',
+    number: t.FIELD_ERROR_INVALID_NUMBER ?? 'Please enter a valid number.',
+    date: t.FIELD_ERROR_INVALID_DATE ?? 'Please enter a valid date.',
+    generic: 'Something went wrong. Please try again.',
+  },
+};
+
+const rows = (step: StepModule) => step.modules.filter((r): r is RowModule => r.type === 'row');
+const buttons = (step: StepModule) =>
+  step.modules.filter((r) => r.type === 'navigationRow').flatMap((r) => r.modules as ButtonModule[]);
+---
+
+<hubspot-form class:list={['hsf', className]} data-form-id={formId}>
+  <form class="hsf-form" novalidate>
+    {
+      steps.map((step, i) => (
+        <section class="hsf-step" data-step={i} hidden={i > 0} tabindex="-1" aria-label={`Step ${i + 1} of ${steps.length}`}>
+          {rows(step).map((row) => (
+            <div class="hsf-row" data-columns={row.modules.length} style={`--hsf-columns: ${row.modules.length}`}>
+              {row.modules.map((m) => (
+                <Module module={m} uid={uid} step={i} stepCount={steps.length} classes={classes} />
+              ))}
+            </div>
+          ))}
+          <div class="hsf-nav">
+            {buttons(step).map((b) =>
+              b.type === 'previousButton' ? (
+                <button
+                  type="button"
+                  class:list={['hsf-button', 'hsf-previous', classes.button, classes.previous]}
+                  data-action="previous"
+                >
+                  {b.text}
+                </button>
+              ) : (
+                <button
+                  type="submit"
+                  class:list={
+                    b.type === 'submitButton'
+                      ? ['hsf-button', 'hsf-submit', classes.button, classes.submit]
+                      : ['hsf-button', 'hsf-next', classes.button, classes.next]
+                  }
+                  data-action={b.type === 'submitButton' ? 'submit' : 'next'}
+                >
+                  {b.text}
+                </button>
+              ),
+            )}
+          </div>
+        </section>
+      ))
+    }
+    <div class="hsf-error" role="alert" hidden></div>
+  </form>
+
+  <div class="hsf-success" role="status" tabindex="-1" hidden>
+    {
+      definition.postSubmit.modules.flatMap(rows).map((row) => (
+        <div class="hsf-row" data-columns={row.modules.length} style={`--hsf-columns: ${row.modules.length}`}>
+          {row.modules.map((m) => (
+            <Module module={m} uid={uid} step={0} stepCount={1} classes={classes} />
+          ))}
+        </div>
+      ))
+    }
+  </div>
+
+  <script type="application/json" class="hsf-config" set:html={JSON.stringify(config).replace(/</g, '\\u003c')} />
+</hubspot-form>
+
+<script>
+  import './client';
+</script>
+
+<style is:global>
+  /* Functional, not visual: keeps inactive steps, errors and the success panel hidden even when
+     site CSS gives those elements a display value (e.g. `.hsf-step { display: grid }`). */
+  .hsf [hidden] {
+    display: none !important;
+  }
+</style>

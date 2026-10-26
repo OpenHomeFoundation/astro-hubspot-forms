@@ -1,0 +1,507 @@
+{
+  "portalId": 146078899,
+  "form": {
+    "id": "70ee1690-62fb-45a8-b1af-abf89ff2f137",
+    "type": 0,
+    "modules": [
+      {
+        "type": "step",
+        "id": 845,
+        "modules": [
+          {
+            "type": "row",
+            "id": 834,
+            "modules": [
+              {
+                "type": "richText",
+                "id": 148,
+                "conditionallyHidden": false,
+                "triggerDependentRulesOnLoad": false,
+                "html": "<p><span style=\"font-size: 30px;\"><strong>Interested in working with us?</strong></span></p>\n<p><br>We're always open to speaking about integrations or other collaborative relationships as well as the Works with program.</p>\n<p>Please complete this form telling us about how you'd like to partner with us, and a member of our team will get back to you.</p>\n<p>&nbsp;</p>"
+              }
+            ]
+          },
+          {
+            "type": "row",
+            "id": 2343755375712,
+            "modules": [
+              {
+                "type": "heading",
+                "id": 3495361306952,
+                "conditionallyHidden": false,
+                "triggerDependentRulesOnLoad": false,
+                "text": "Tell us about yourself",
+                "level": 3
+              }
+            ]
+          },
+          {
+            "type": "row",
+            "id": 835,
+            "modules": [
+              {
+                "type": "text",
+                "conditionallyHidden": false,
+                "triggerDependentRulesOnLoad": false,
+                "label": "First Name",
+                "required": false,
+                "propertyReference": "0-1/firstname",
+                "id": 6,
+                "description": ""
+              },
+              {
+                "type": "text",
+                "conditionallyHidden": false,
+                "triggerDependentRulesOnLoad": false,
+                "label": "Last Name",
+                "required": false,
+                "propertyReference": "0-1/lastname",
+                "id": 5,
+                "description": ""
+              }
+            ]
+          },
+          {
+            "type": "row",
+            "id": 836,
+            "modules": [
+              {
+                "type": "email",
+                "conditionallyHidden": false,
+                "triggerDependentRulesOnLoad": false,
+                "label": "Email",
+                "required": true,
+                "propertyReference": "0-1/email",
+                "id": 3,
+                "description": ""
+              }
+            ]
+          },
+          {
+            "type": "row",
+            "id": 837,
+            "modules": [
+              {
+                "type": "progressBar",
+                "id": 16,
+                "format": "number"
+              }
+            ]
+          },
+          {
+            "type": "navigationRow",
+            "id": 838,
+            "modules": [
+              {
+                "type": "nextButton",
+                "id": 13,
+                "text": "Next"
+              }
+            ]
+          }
+        ],
+        "conditionallyHidden": false,
+        "triggerDependentRulesOnLoad": false,
+        "bannerStyle": {
+          "backgroundImage": "url(\"https://146078899.fs1.hubspotusercontent-eu1.net/hub/146078899/hubfs/zbt-2-frontpage.webp?width=800&height=533.3333333333334\"), linear-gradient(to bottom, rgba(24,188,242,1.0), rgba(0,164,235,1.0))",
+          "backgroundPositionX": "center",
+          "backgroundPositionY": "center",
+          "backgroundRepeat": "no-repeat",
+          "backgroundSize": "cover",
+          "filter": "contrast(1.0) brightness(1.0)"
+        },
+        "layoutTemplate": "bottom"
+      },
+      {
+        "type": "step",
+        "id": 846,
+        "modules": [
+          {
+            "type": "row",
+            "id": 3030066208534,
+            "modules": [
+              {
+                "type": "heading",
+                "id": 1873222081590,
+                "conditionallyHidden": false,
+                "triggerDependentRulesOnLoad": false,
+                "text": "Tell us about your business",
+                "level": 3
+              }
+            ]
+          },
+          {
+            "type": "row",
+            "id": 2744160896346,
+            "modules": [
+              {
+                "type": "text",
+                "conditionallyHidden": false,
+                "triggerDependentRulesOnLoad": false,
+                "label": "Company name",
+                "required": false,
+                "propertyReference": "0-2/name",
+                "id": 2450333575649,
+                "description": ""
+              }
+            ]
+          },
+          {
+            "type": "row",
+            "id": 1877995773435,
+            "modules": [
+              {
+                "type": "text",
+                "conditionallyHidden": false,
+                "triggerDependentRulesOnLoad": false,
+                "label": "Website",
+                "required": false,
+                "propertyReference": "0-2/domain",
+                "id": 2044966689868,
+                "description": ""
+              }
+            ]
+          },
+          {
+            "type": "row",
+            "id": 2482920820662,
+            "modules": [
+              {
+                "type": "dropdownSelect",
+                "id": 3333052345629,
+                "conditionallyHidden": false,
+                "triggerDependentRulesOnLoad": false,
+                "label": "What type of partnership are you interested in?",
+                "required": false,
+                "propertyReference": "0-1/enquiry_type",
+                "description": "",
+                "options": [
+                  {
+                    "label": "I want to certify my device(s) under the Works with Home Assistant program",
+                    "value": "Works with Home Assistant (WWHA) Certification",
+                    "selected": false
+                  },
+                  {
+                    "label": "I want to install Home Assistant or discuss a Home Assistant training/certification service",
+                    "value": "Installer/Training/Certification Services",
+                    "selected": false
+                  },
+                  {
+                    "label": "I want to discuss a community/creator collaboration",
+                    "value": "Community/Creator Collaboration",
+                    "selected": false
+                  },
+                  {
+                    "label": "I want to resell/distribute hardware",
+                    "value": "Reseller / Distributor",
+                    "selected": false
+                  },
+                  {
+                    "label": "I want to integrate my device or software with Home Assistant",
+                    "value": "Integrator",
+                    "selected": false
+                  },
+                  {
+                    "label": "I want to discuss a commercial partnership opportunity",
+                    "value": "Commercial Enquiry",
+                    "selected": false
+                  },
+                  {
+                    "label": "I want to make a major donation to the Open Home Foundation",
+                    "value": "Fundraising",
+                    "selected": false
+                  }
+                ],
+                "placeholder": "",
+                "showDropdownSearch": true
+              }
+            ]
+          },
+          {
+            "type": "row",
+            "id": 3337255216360,
+            "modules": [
+              {
+                "type": "textarea",
+                "id": 3229186471117,
+                "conditionallyHidden": false,
+                "triggerDependentRulesOnLoad": false,
+                "label": "In your own words, please describe how you'd like to partner with us",
+                "required": false,
+                "propertyReference": "0-1/enquiry_description",
+                "description": ""
+              }
+            ]
+          },
+          {
+            "type": "row",
+            "id": 1883241653250,
+            "modules": [
+              {
+                "type": "heading",
+                "id": 1819229096664,
+                "conditionallyHidden": false,
+                "triggerDependentRulesOnLoad": false,
+                "text": "Privacy",
+                "level": 3
+              }
+            ]
+          },
+          {
+            "type": "row",
+            "id": 2521618673998,
+            "modules": [
+              {
+                "type": "dataPrivacy",
+                "id": 2574912454549,
+                "isLegitimateInterest": false,
+                "processingConsentType": "REQUIRED_CHECKBOX",
+                "legitimateInterestSubscriptionTypes": [
+                  785871106
+                ],
+                "communicationConsentCheckboxes": [
+                  {
+                    "communicationTypeId": 785871106,
+                    "label": "I have read the <a href=\"https://www.openhomefoundation.org/privacy-policy/\" target=\"_blank\" rel=\"noopener\">Privacy Polic</a>y and agree to receive communication from the Open Home Foundation about my enquiry.",
+                    "required": true
+                  }
+                ],
+                "legitimateInterestLegalBasis": "LEGITIMATE_INTEREST_PQL",
+                "communicationConsentText": "By checking the boxes below, you agree to receive communications from the Open Home Foundation.",
+                "processingConsentCheckboxLabel": "I agree to allow the Open Home Foundation to store and process my personal data.",
+                "processingConsentText": "To process your request, we need your permission to store and process your personal data. Please check the box below to confirm your consent:",
+                "privacyPolicyText": "We care about your privacy. Learn how we handle your data in our <a href=\"https://www.openhomefoundation.org/privacy-policy/\" target=\"_blank\" rel=\"noopener\">Privacy Policy</a>."
+              }
+            ]
+          },
+          {
+            "type": "row",
+            "id": 842,
+            "modules": [
+              {
+                "type": "progressBar",
+                "id": 16,
+                "format": "number"
+              }
+            ]
+          },
+          {
+            "type": "navigationRow",
+            "id": 843,
+            "modules": [
+              {
+                "type": "previousButton",
+                "id": 14,
+                "text": "Previous"
+              },
+              {
+                "type": "submitButton",
+                "id": 15,
+                "text": "Submit"
+              }
+            ]
+          }
+        ],
+        "conditionallyHidden": false,
+        "triggerDependentRulesOnLoad": false,
+        "bannerStyle": {
+          "backgroundImage": "url(\"https://146078899.fs1.hubspotusercontent-eu1.net/hub/146078899/hubfs/zbt-2-frontpage.webp?width=800&height=533.3333333333334\"), linear-gradient(to bottom, rgba(24,188,242,1.0), rgba(0,164,235,1.0))",
+          "backgroundPositionX": "left",
+          "backgroundPositionY": "center",
+          "backgroundRepeat": "no-repeat",
+          "backgroundSize": "cover",
+          "filter": "contrast(1.0) brightness(1.0)"
+        },
+        "layoutTemplate": "bottom"
+      }
+    ],
+    "logicRules": {},
+    "lastUpdatedAt": 1792675102476
+  },
+  "postSubmit": {
+    "modules": [
+      {
+        "type": "step",
+        "id": 847,
+        "modules": [
+          {
+            "type": "row",
+            "id": 844,
+            "modules": [
+              {
+                "type": "richText",
+                "id": 150,
+                "conditionallyHidden": false,
+                "triggerDependentRulesOnLoad": false,
+                "html": "<p><span style=\"font-size: 30px;\"><strong>Form submitted</strong></span><br></p><p style=\"font-size: 16px; line-height: 125%;\"><br>Thank you, we'll be in touch soon.</p><p style=\"font-size: 16px; line-height: 125%;\">&nbsp;</p>"
+              }
+            ]
+          }
+        ],
+        "conditionallyHidden": false,
+        "triggerDependentRulesOnLoad": false,
+        "bannerStyle": {
+          "backgroundImage": "url(\"https://146078899.fs1.hubspotusercontent-eu1.net/hub/146078899/hubfs/zbt-2-frontpage.webp?width=800&height=533.3333333333334\"), linear-gradient(to bottom, rgba(24,188,242,1.0), rgba(0,164,235,1.0))",
+          "backgroundPositionX": "center",
+          "backgroundPositionY": "center",
+          "backgroundRepeat": "no-repeat",
+          "backgroundSize": "cover",
+          "filter": "contrast(1.0) brightness(1.0)"
+        },
+        "layoutTemplate": "twoThirdRight"
+      }
+    ]
+  },
+  "settings": {
+    "enabledLiveValidation": true,
+    "locale": "EN",
+    "shortenForm": false,
+    "includeResetLink": false,
+    "resumeFormFill": false,
+    "hpEnabled": false
+  },
+  "style": {
+    "richText": {
+      "fontFamily": "Inter",
+      "fontSize": "0.875em",
+      "color": "rgba(4,57,80,1.0)"
+    },
+    "inputField": {
+      "description": {
+        "color": "rgba(81,99,131,0.89)",
+        "fontFamily": "Figtree"
+      },
+      "error": {
+        "color": "rgba(137,34,60,1.0)",
+        "fontFamily": "Figtree",
+        "fontSize": "0.875em"
+      },
+      "input": {
+        "fontFamily": "Figtree",
+        "color": "rgba(4,57,80,1.0)",
+        "backgroundColor": "rgba(247,249,252,1.0)",
+        "borderColor": "rgba(211,218,228,1.0)",
+        "borderTopLeftRadius": "30.0px",
+        "borderTopRightRadius": "30.0px",
+        "borderBottomRightRadius": "30.0px",
+        "borderBottomLeftRadius": "30.0px",
+        "borderStyle": "solid",
+        "borderTopWidth": "1.0px",
+        "borderBottomWidth": "1.0px",
+        "borderLeftWidth": "1.0px",
+        "borderRightWidth": "1.0px",
+        "paddingTop": "12.0px",
+        "paddingBottom": "12.0px",
+        "paddingLeft": "10.0px",
+        "paddingRight": "10.0px"
+      },
+      "label": {
+        "color": "rgba(4,57,80,1.0)",
+        "fontFamily": "Figtree",
+        "fontSize": "0.875em"
+      },
+      "placeholder": {
+        "color": "rgba(81,99,131,0.64)",
+        "fontFamily": "Figtree"
+      }
+    },
+    "button": {
+      "backgroundColor": "rgba(92,115,145,1.0)",
+      "boxShadow": "0.0px 0.0px 0.0px 0.0px rgba(0,0,0,1.0)",
+      "color": "rgba(255,255,255,1.0)",
+      "fontFamily": "Figtree",
+      "fontSize": "0.875em",
+      "borderTopLeftRadius": "30.0px",
+      "borderTopRightRadius": "30.0px",
+      "borderBottomRightRadius": "30.0px",
+      "borderBottomLeftRadius": "30.0px",
+      "paddingTop": "12.0px",
+      "paddingBottom": "12.0px",
+      "paddingLeft": "36.0px",
+      "paddingRight": "36.0px"
+    },
+    "background": {
+      "backgroundColor": "rgba(255,255,255,1.0)",
+      "borderColor": "rgba(255,255,255,1.0)",
+      "borderStyle": "none",
+      "borderBottomWidth": "1.0px",
+      "borderTopWidth": "1.0px",
+      "borderLeftWidth": "1.0px",
+      "borderRightWidth": "1.0px",
+      "borderTopLeftRadius": "0.0px",
+      "borderTopRightRadius": "0.0px",
+      "borderBottomRightRadius": "0.0px",
+      "borderBottomLeftRadius": "0.0px"
+    },
+    "heading": {
+      "fontFamily": "Figtree",
+      "color": "rgba(4,57,80,1.0)"
+    },
+    "progressBar": {
+      "text": {
+        "fontFamily": "Figtree",
+        "color": "rgba(4,57,80,1.0)",
+        "fontSize": "0.875em"
+      },
+      "progressLine": {
+        "backgroundImage": "linear-gradient(to right, rgba(24,188,242,1.0), rgba(0,164,235,1.0))"
+      },
+      "trackLine": {
+        "backgroundColor": "rgba(217,217,217,1.0)"
+      }
+    }
+  },
+  "translations": {
+    "FIELD_ERROR_REQUIRED_FIELD": "Please complete this required field.",
+    "FIELD_ERROR_PHONE_INVALID_CHARACTERS": "Must start with an extension and contain only numbers, +()-. and x.",
+    "FIELD_ERROR_MAX_SELECTION_LIMIT_EXCEEDED": "You can only select up to {{max}} option(s)",
+    "FIELD_ERROR_INPUT_TOO_LARGE": "Please use fewer than 65536 characters.",
+    "FIELD_ERROR_INVALID_EMAIL_FORMAT": "Email must be formatted correctly.",
+    "FIELD_ERROR_FILE_TOO_LARGE": "Selected file is too large. Maximum allowed size is 100MB.",
+    "FIELD_ERROR_INVALID_DATE": "Please enter a valid date.",
+    "FIELD_ERROR_INVALID_NUMBER": "Please enter a valid number.",
+    "GLOBAL_ERROR_MISSING_REQUIRED_FIELDS": "Please complete all required fields.",
+    "GLOBAL_ERROR_BLOCKED_EMAIL": "Please change your email address to continue.",
+    "GLOBAL_ERROR_TOO_MANY_REQUESTS": "There was an issue submitting your form. Please wait a few seconds and try again.",
+    "GLOBAL_ERROR_FIELD_ERRORS": "The form could not be submitted because some fields contain errors.",
+    "GLOBAL_ERROR_PREFIX": "Error: ",
+    "NUMBER_DECIMAL_INFO": "Note: using a comma, full stop or period will give you a decimal.",
+    "EMAIL_RESUBSCRIBE_REQUIRED": "Looks like you've opted out of email communication. Click here to get an email and opt back in.",
+    "EMAIL_SUGGESTION": "Did you mean {{suggestion}}?",
+    "STEP_RESET_LINK": "Not you? Click here to reset",
+    "FILE_LABEL_SINGLE_DROP": "Drop a file here to upload",
+    "FILE_LABEL_MULTIPLE_DROP": "Drop files here to upload",
+    "FILE_SUBTITLE_BROWSE": "Or, click to browse",
+    "FILE_LABEL_UPLOADING": "Uploading",
+    "FILE_LABEL_UPLOAD_COMPLETE": "Upload complete",
+    "FILE_LABEL_UPLOAD_FAILED": "Upload failed",
+    "FILE_SUBTITLE_SEC_REMAINING": "{{seconds}} seconds remaining",
+    "FILE_SUBTITLE_REMOVE_FILE": "Remove",
+    "FILE_SUBTITLE_RETRY_FILE": "Retry or start again",
+    "SEARCH_PLACEHOLDER": "Search",
+    "SEARCH_NO_MATCHES": "No matches found",
+    "SUBMISSION_BLOCKED_FORM_UNPUBLISHED": "This form is no longer accepting submissions. Thank you for your interest.",
+    "NEXT_BUTTON_STEP_VALIDATION_TOOLTIP": "Please complete all required fields to continue.",
+    "RECAPTCHA_BADGE_STATEMENT": "This form is protected by reCAPTCHA.",
+    "RECAPTCHA_BADGE_TEXT": "protected by"
+  },
+  "hsCdnGoogleFonts": [
+    {
+      "fontFamily": "Figtree",
+      "woffUrls": [
+        "cdn1.hubspotusercontent-eu1.net/googlefonts/fonts/Figtree/regular.woff2",
+        "cdn1.hubspotusercontent-eu1.net/googlefonts/fonts/Figtree/500.woff2",
+        "cdn1.hubspotusercontent-eu1.net/googlefonts/fonts/Figtree/700.woff2"
+      ]
+    },
+    {
+      "fontFamily": "Inter",
+      "woffUrls": [
+        "cdn1.hubspotusercontent-eu1.net/googlefonts/fonts/Inter/regular.woff2",
+        "cdn1.hubspotusercontent-eu1.net/googlefonts/fonts/Inter/500.woff2",
+        "cdn1.hubspotusercontent-eu1.net/googlefonts/fonts/Inter/700.woff2"
+      ]
+    }
+  ],
+  "isPublished": true
+}
