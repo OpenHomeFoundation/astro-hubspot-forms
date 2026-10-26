@@ -50,7 +50,9 @@ class HubSpotFormElement extends HTMLElement {
     this.setAttribute('data-step', String(index));
     const step = this.#steps[index];
     step.focus({ preventScroll: true });
-    if (step.getBoundingClientRect().top < 0) step.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    // Respect scroll-margin-top so sites with a sticky header can keep the step clear of it.
+    const margin = parseFloat(getComputedStyle(step).scrollMarginTop) || 0;
+    if (step.getBoundingClientRect().top < margin) step.scrollIntoView({ behavior: 'smooth', block: 'start' });
     this.dispatchEvent(new CustomEvent('hubspot-form:step', { bubbles: true, detail: { step: index } }));
   }
 
@@ -106,7 +108,13 @@ class HubSpotFormElement extends HTMLElement {
       }
       return !this.#validateField(el);
     });
-    invalid[0]?.focus();
+    // Centre the first invalid field: a plain focus() scrolls minimally, which can leave it under a
+    // sticky header.
+    const first = invalid[0];
+    if (first) {
+      first.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      first.focus({ preventScroll: true });
+    }
     return invalid.length === 0;
   }
 

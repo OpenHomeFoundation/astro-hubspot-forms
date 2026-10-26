@@ -182,6 +182,10 @@ While a submission is in flight, the wrapper has a `data-submitting` attribute. 
 > steps hidden even when your site gives `.hsf-step` a `display` value.
 
 > [!TIP]
+> Site has a sticky header? Set `scroll-margin-top` on `.hsf-step` to the header's height, so moving between steps
+> scrolls the new step clear of it. Invalid fields are scrolled to the middle of the screen, so they're never hidden.
+
+> [!TIP]
 > Rich text written in the HubSpot editor can contain inline styles (such as a font size on a heading). Inline styles
 > beat your stylesheet, so keep rich text plain in HubSpot if you want it to follow your site's typography. Empty
 > paragraphs and stray line breaks the editor adds for spacing are removed, so spacing comes from your CSS.
