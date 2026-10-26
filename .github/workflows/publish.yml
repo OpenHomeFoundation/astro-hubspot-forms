@@ -29,8 +29,8 @@ jobs:
         working-directory: packages/astro-hubspot-forms
         run: npm pkg set version="${GITHUB_REF_NAME#v}"
 
-      - name: Include README in the package
-        run: cp README.md packages/astro-hubspot-forms/README.md
+      - name: Include README and licence in the package
+        run: cp README.md LICENSE packages/astro-hubspot-forms/
 
       - name: Publish
         working-directory: packages/astro-hubspot-forms

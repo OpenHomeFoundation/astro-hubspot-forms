@@ -25,6 +25,7 @@ class HubSpotFormElement extends HTMLElement {
     this.#config = JSON.parse(configEl.textContent ?? '{}');
     this.#form = form;
     this.#steps = [...form.querySelectorAll<HTMLElement>('.hsf-step')];
+    this.setAttribute('data-step', '0');
 
     form.addEventListener('submit', (e) => this.#onSubmit(e));
     form.addEventListener('click', (e) => {
